@@ -12,6 +12,12 @@ class App extends Component {
     searchInput: ""
   }
 
+// re-usable code in other components..?
+  handleSearch = (event) => {
+    this.setState({ searchInput: event.target.value })
+  }
+
+  handle
 
   render() {
     return (
@@ -30,7 +36,7 @@ class App extends Component {
           <br></br>
           <Button variant="contained" color="primary">Log in</Button>
           <form>
-              <input type="text" name="search" placeholder="Search..." />
+              <input type="text" name="search" placeholder="Search..." value={this.state.searchInput} onChange={this.handleSearch} />
             <input type="submit" value="Submit" />
           </form>
         </header>
