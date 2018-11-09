@@ -9,9 +9,9 @@ class NewsItem extends Component {
 
     render() {
     return (
-      <div>
-        {this.props.news.title} - {this.props.news.author}
-      </div>
+      <ul>
+        <li>{this.props.news.title} - {this.props.news.author}</li>
+      </ul>
     );
   }
 }

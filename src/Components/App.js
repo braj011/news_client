@@ -18,6 +18,8 @@ class App extends Component {
     this.setState({ searchInput: event.target.value })
   }
 
+  // create method to pass searchInput value to the Rails API 
+
   getNews () {
     return fetch('http://localhost:3000/news_apis')
         .then(resp => resp.json())
@@ -48,7 +50,9 @@ class App extends Component {
           <Button variant="contained" color="primary">Log in</Button>
           <form>
               <input type="text" name="search" placeholder="Search..." value={this.state.searchInput} onChange={this.handleSearch} />
-            <input type="submit" value="Submit" onClick={this.handleSubmit}/>
+            <input type="submit" value="Submit" 
+            // onClick={this.getNews}
+            />
           </form>
         </header>
         <NewsList newsData={this.state.news} />
