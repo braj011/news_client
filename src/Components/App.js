@@ -18,19 +18,27 @@ class App extends Component {
     this.setState({ searchInput: event.target.value })
   }
 
-  getNews () {
-    return fetch('http://localhost:3000/news_apis')
+  getNews = () => {
+    return fetch('http://localhost:3000/news_apis/',  {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        'type': 'everything',
+        'query': this.state.searchInput,
+        'sort': 'popularity'
+      })
+    })
         .then(resp => resp.json())
         .then(newsData => this.setState({ news: newsData.articles }))
   }
 
   componentDidMount() {
-    this.getNews()
+    
   }
 
   handleSubmit = (event) => {
     event.preventDefault()
-    
+    this.getNews()
   }
 
   render() {
