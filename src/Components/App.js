@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import './App.css';
 import  Button  from '@material-ui/core/Button'
 import NewsList from './NewsList'
-
-import SearchBar from './SearchBar'
+import HomeFilterForm from './HomeFilterForm'
+// import SearchBar from './SearchBar'
 import ProfilePage from './ProfilePage'
 
-import HomeFilterForm from './HomeFilterForm'
+
 
 // import InputBase from '@material-ui/core/InputBase';
 
@@ -14,10 +14,10 @@ import HomeFilterForm from './HomeFilterForm'
 class App extends Component {
 
   state = {
-    logged_in: true,
+    logged_in: false,
     searchInput: "",
     news: [],
-    user_id: 2,
+    user_id: 3,
     user_name: '',
     user_categories: [],
     country: "us",
@@ -85,8 +85,8 @@ class App extends Component {
 } 
 
   componentDidMount() {
+  
   this.state.logged_in ? this.getProfile() : this.getNewsHeadlines() 
-
   }
 
 
@@ -101,13 +101,6 @@ class App extends Component {
     event.preventDefault()
     this.state.logged_in ? this.getProfileNews() : this.getNewsHeadlines()
   }
-
-
-  componentDidMount() {
-    this.getNewsHeadlines()
-  }
-
-
 
   render() {
     const { handleChange, handleSubmit, getNewsHeadlines } = this
@@ -124,18 +117,15 @@ class App extends Component {
           </h1>
           <Button variant="contained" color="primary">Sign up</Button>
           <Button variant="contained" color="primary">Log in</Button>
-
-          {this.state.logged_in ? <input type="button" value="Get News" onClick={this.handleSubmit}/> : <SearchBar searchInput={this.state.searchInput} handleSearch={this.handleSearch} handleSubmit={this.handleSubmit}/>}
+          {this.state.logged_in ? 
+            <input type="button" value="Get News" onClick={this.handleSubmit}/> 
+          : <HomeFilterForm handleChange={handleChange} handleSubmit={handleSubmit} />}
         </header>
-        {this.state.logged_in ? <ProfilePage user={this.state.user_id} username={this.state.user_name} categories={this.state.user_categories} newsData={this.state.news} getProfileNews={this.getProfileNews}/> : <NewsList newsData={this.state.news} />  <HomeFilterForm handleChange={handleChange} handleSubmit={handleSubmit} />}
-
-        
-          {/* <form>
-              <input type="text" name="search" placeholder="Search..." value={this.state.searchInput} onChange={this.handleSearch} />
-            <input type="submit" value="Submit" onClick={handleSubmit}/>
-          </form> */}
+        {this.state.logged_in ? 
+          <ProfilePage user={this.state.user_id} username={this.state.user_name} categories={this.state.user_categories} newsData={this.state.news} getProfileNews={this.getProfileNews}/> 
+        : <NewsList newsData={this.state.news}  handleChange={handleChange} handleSubmit={handleSubmit}/>}
        
-        
+       {/* <SearchBar searchInput={this.state.searchInput} handleSearch={this.handleSearch} handleSubmit={this.handleSubmit}/> */}
       </div>
     );
   }
