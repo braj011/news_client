@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import  Button  from '@material-ui/core/Button'
+// import Card from '@material-ui/core/Card';
+import { Card } from 'semantic-ui-react'
 
 // import InputBase from '@material-ui/core/InputBase';
 
@@ -8,11 +10,15 @@ import  Button  from '@material-ui/core/Button'
 class NewsItem extends Component {
 
     render() {
+    const { news } = this.props
     return (
-      <div>
-        {this.props.news.title} - {this.props.news.author}
-      </div>
-    );
+      <Card>
+        <div className="content">
+          {news.title} - {news.author}
+          <p> {news.description} </p>
+        </div>
+      </Card>
+      )
   }
 }
 
