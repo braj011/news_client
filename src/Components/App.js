@@ -47,12 +47,10 @@ class App extends Component {
       })
     }).then(resp => resp.json())
       .then(newsData => this.setState({news: newsData.articles}))
-      .then(console.log(this.state.news))
+      // .then(() => console.log(this.state.news))
   }
 
-  // componentDidMount() {
-    
-  // }
+
 
   handleChange = (e) => {
     this.setState({
@@ -65,8 +63,16 @@ class App extends Component {
     this.getNewsHeadlines()
   }
 
+
+  componentDidMount() {
+    this.getNewsHeadlines()
+  }
+
+
+
   render() {
-    const { handleChange, handleSubmit } = this
+    const { handleChange, handleSubmit, getNewsHeadlines } = this
+    const { news } = this.state
     return (
       <div className="App">
         <header>
@@ -85,7 +91,9 @@ class App extends Component {
             <input type="submit" value="Submit" onClick={handleSubmit}/>
           </form> */}
         </header>
-        <NewsList newsData={this.state.news} />
+        <NewsList newsData={news} 
+        // getDefaultNews={handleSubmit} 
+        />
       </div>
     );
   }

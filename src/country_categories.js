@@ -15,7 +15,6 @@ const categories = [
   { name: "Technology", code: "technology" } 
 ]
 
-
 export {
   countries,
   categories

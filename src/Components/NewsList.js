@@ -8,6 +8,7 @@ import { Card } from 'semantic-ui-react'
 class NewsList extends Component {
 
     displayAllNews = () => {
+      // this.props.getDefaultNews()
       return this.props.newsData.map((item, idx) => <NewsItem news={item} key={idx}/>)
     }
 
