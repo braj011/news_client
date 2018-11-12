@@ -7,6 +7,10 @@ class API {
 
  
 
+  // static getNewsHeadlines () {
+
+  // }
+
 } 
 
 API.init()
