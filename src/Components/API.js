@@ -10,6 +10,10 @@ class API {
         .then(resp => resp.json())
   }
 
+  // static getNewsHeadlines () {
+
+  // }
+
 } 
 
 API.init()
