@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import  Button  from '@material-ui/core/Button'
+// import  Button  from '@material-ui/core/Button'
 import NewsList from './NewsList'
 import HomeFilterForm from './HomeFilterForm'
 // import SearchBar from './SearchBar'
@@ -24,25 +24,10 @@ class App extends Component {
     category: "All"
   }
 
-// re-usable code in other components..?
+
   handleSearch = (event) => {
     this.setState({ searchInput: event.target.value })
   }
-
-  // getNews = () => {
-  //   return fetch('http://localhost:3000/news_apis/',  {
-  //     method: 'POST',
-  //     headers: { 'Content-Type': 'application/json' },
-  //     body: JSON.stringify({
-  //       'type': 'everything',
-  //       'query': this.state.searchInput,
-  //       'sort': 'popularity'
-  //     })
-  //   })
-  //       .then(resp => resp.json())
-  //       .then(newsData => this.setState({ news: newsData.articles }))
-  // }
-
   
   getNewsHeadlines = () => {
     return fetch('http://localhost:3000/news_apis/', {
@@ -85,7 +70,10 @@ class App extends Component {
 } 
 
   componentDidMount() {
-  this.state.logged_in ? this.getProfile().then(this.getProfileNews) : this.getNewsHeadlines() 
+  this.state.logged_in ? 
+    this.getProfile().then(this.getProfileNews) 
+    : 
+    this.getNewsHeadlines() 
   }
 
 
@@ -114,10 +102,11 @@ class App extends Component {
           >
            Welcome to the source of #real news
           </h1>
-          <Button variant="contained" color="primary">Sign up</Button>
-          <Button variant="contained" color="primary">Log in</Button>
+          <button className="auth-button">Sign up</button>
+          {/* variant="contained" color="primary" */}
+          <button className="auth-button">Log in</button>
           {this.state.logged_in ? 
-            <input type="button" value="Get News" onClick={this.handleSubmit}/> 
+            <input type="button" className="get-news-button" value="Get News" onClick={this.handleSubmit}/> 
           : <HomeFilterForm handleChange={handleChange} handleSubmit={handleSubmit} />}
         </header>
         {this.state.logged_in ? 

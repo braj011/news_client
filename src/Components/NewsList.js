@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 import NewsItem from './NewsItem'
-import { Card } from 'semantic-ui-react'
 
 // import InputBase from '@material-ui/core/InputBase';
 
@@ -15,11 +14,10 @@ class NewsList extends Component {
 
     render() {
     return (
-      <div>
-        
-      <Card.Group itemsPerRow={6}>
-        {this.displayAllNews()}
-        </Card.Group>
+      <div className="main-content">
+        <div className="row">
+          {this.displayAllNews()}
+        </div>
       </div>
     );
   }

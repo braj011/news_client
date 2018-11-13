@@ -18,8 +18,12 @@ class ProfilePage extends Component {
     render() {
     return (
       <div>
-        Profile Page for {this.props.username}<br />
-        Categories: {this.props.categories.map(categoryItem => <span>{categoryItem.name} </span>)}
+        <h1>Welcome, {this.props.username}</h1>
+        <br />
+        <h3>Your categories: </h3>
+        <div class="ui segment">
+          {this.props.categories.map(categoryItem => <span>{categoryItem.name} </span>)}
+        </div>
         {this.displayAllNews()}
       </div>
     );
