@@ -29,11 +29,10 @@ class App extends Component {
     return this.state.news.filter(article => {
       // if (article.author) {
         return article.author.toLowerCase().includes(this.state.searchInput.toLowerCase()) 
-              || article.title.toLowerCase().includes(this.state.searchInput.toLowerCase())
+            || article.title.toLowerCase().includes(this.state.searchInput.toLowerCase())
       // } 
     })
   }  
-  
   
   getNewsHeadlines = () => {
     if (this.state.news.length > 0) {
@@ -56,12 +55,9 @@ class App extends Component {
             return article
           }
         })
-        // console.log(news)
-        
         this.setState({news: news})
       }) 
   }
-
 
   getProfileNews = () => {
     if (this.state.news.length > 0) {
@@ -78,9 +74,18 @@ class App extends Component {
       })
     })
         .then(resp => resp.json())
-        .then(newsData => this.setState({ news: newsData.articles }))
-        
-  }
+        .then(newsData => {
+          const news = newsData.articles.map(article => {
+            if (!article.author) {
+              return {...article, author: "Unknown"}
+              // spreading existing articles and if author key is falsey, it gets replaced with "Unknown"
+            } else {
+              return article
+            }
+          })
+          this.setState({news: news})
+        }) 
+    }
 
   getProfile = () => {
     return fetch (`http://localhost:3000/users/${this.state.user_id}`)
@@ -110,8 +115,8 @@ class App extends Component {
   }
 
   render() {
-    const { handleChange, handleSubmit } = this
-    // const { news } = this.state
+    const { handleChange, handleSubmit, handleSearch, filterByAuthorOrArticle } = this
+    const { searchInput } = this.state
     return (
       <div className="App">
         <header>
@@ -127,12 +132,13 @@ class App extends Component {
           <button className="auth-button">Log in</button>
 
           {this.state.logged_in ? 
-            null
-          : <HomeFilterForm handleChange={handleChange} handleSubmit={handleSubmit} />}
+            <input type="button" className="get-news-button" value="Get News" onClick={this.handleSubmit}/> 
+          : <HomeFilterForm handleChange={handleChange} handleSubmit={handleSubmit} handleFilter={handleSearch} searchInput={searchInput} />}
         </header>
         {this.state.logged_in ? 
-          <ProfilePage user={this.state.user_id} username={this.state.user_name} categories={this.state.user_categories} newsData={this.state.news} getProfileNews={this.getProfileNews} handleSubmit={handleSubmit}/> 
-        : <NewsList newsData={this.state.news}  handleChange={handleChange} handleSubmit={handleSubmit}/>}
+          <ProfilePage user={this.state.user_id} username={this.state.user_name} categories={this.state.user_categories} newsData={filterByAuthorOrArticle()} 
+           getProfileNews={this.getProfileNews} handleSubmit={handleSubmit} handleFilter={handleSearch} /> 
+        : <NewsList newsData={filterByAuthorOrArticle()}  handleFilter={handleSearch} handleChange={handleChange} handleSubmit={handleSubmit}/>}
 
        
        {/* <SearchBar searchInput={this.state.searchInput} handleSearch={this.handleSearch} handleSubmit={this.handleSubmit}/> */}

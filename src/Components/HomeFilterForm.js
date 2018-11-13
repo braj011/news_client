@@ -18,8 +18,10 @@ const HomeFilterForm = (props) => {
       </select> 
       <button onClick={props.handleSubmit}>Get News</button>
       <div>
+        <br></br>
         <input placeholder="Filter by Author or Article" onChange={props.handleFilter} value={props.searchInput}></input>
       </div>
+      <input type="button" className="get-news-button" value="&#x21bb;" onClick={props.handleSubmit}/>
     </div>
   )
 }
