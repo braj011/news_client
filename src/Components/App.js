@@ -1,27 +1,26 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Route } from 'react-router-dom'
+import { Route, Link, Switch } from 'react-router-dom'
 
 // import API from './API'
 import LoginForm from './LoginForm'
 import NewsList from './NewsList'
 import HomeFilterForm from './HomeFilterForm'
+import Home from './Home'
 
 import ProfilePage from './ProfilePage'
-
 
 class App extends Component {
 
   state = {
-    logged_in: false,
+    logged_in: true,
     searchInput: "",
     news: [],
-    user_id: 2,
+    user_id: 4,
     user_name: '',
     user_categories: [],
     country: "us",
-    category: "All",
-    loginClicked: false
+    category: "All"
   }
 
   updateState = (update) => {
@@ -45,10 +44,6 @@ class App extends Component {
       // } 
     })
   }  
-
-  loginClick = () => {
-    this.setState({ loginClicked: !this.state.loginClicked })
-  }
   
   getNewsHeadlines = () => {
     if (this.state.news.length > 0) {
@@ -131,8 +126,8 @@ class App extends Component {
   }
 
   render() {
-    const { handleChange, handleSubmit, handleSearch, filterByAuthorOrArticle, loginClick } = this
-    const { searchInput, loginClicked } = this.state
+    const { handleChange, handleSubmit, handleSearch, filterByAuthorOrArticle } = this
+    const { searchInput, logged_in, user_categories, user_name, user_id } = this.state
     return (
       <div className="App">
         <header>
@@ -142,23 +137,21 @@ class App extends Component {
             rel="noopener noreferrer"
           >Welcome to the source of #real news
           </h1>
-          <button className="auth-button">Sign up</button>
-          <button className="auth-button" onClick={loginClick}>Log in</button>
-          { loginClicked ?
-              <Route path='/login' render={props => <LoginForm {...props} />} />
-              : 
-              null
-          }
           
+          <Link to="/signup">
+            <button className="auth-button">Sign up</button>
+          </Link>
+          {/* <Route path='/signup' render={props => <SignupForm {...props} />} /> */}
 
-          {this.state.logged_in ? 
-            <input type="button" className="get-news-button" value="Get News" onClick={this.handleSubmit}/> 
-          : <HomeFilterForm handleChange={handleChange} handleSubmit={handleSubmit} handleFilter={handleSearch} searchInput={searchInput} />}
+          <Link to="/login">
+            <button className="auth-button" >Log in</button>
+          </Link>
+          <Route path='/login' render={props => <LoginForm {...props} />} />
+          
         </header>
-        {this.state.logged_in ? 
-          <ProfilePage user={this.state.user_id} username={this.state.user_name} categories={this.state.user_categories} newsData={filterByAuthorOrArticle()} 
-            getProfileNews={this.getProfileNews} handleSubmit={handleSubmit} updateState={this.updateState} handleFilter={handleSearch} /> 
-        : <NewsList newsData={this.filterByAuthorOrArticle()}   handleFilter={handleSearch} handleChange={handleChange} handleSubmit={handleSubmit}/>}
+          
+        <Route path='/home' render={props => <Home {...props} user_name={user_name} user_id={user_id} user_categories={user_categories} handleChange={handleChange} handleSubmit={handleSubmit} handleFilter={handleSearch} 
+        searchInput={searchInput} filterByAuthorOrArticle={filterByAuthorOrArticle} logged_in={logged_in} />} />
 
 
        
