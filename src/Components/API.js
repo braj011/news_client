@@ -4,6 +4,7 @@ class API {
     this.newsUrl = 'http://localhost:3000/news_apis'  // for when on local 
     this.baseUrl = 'http://localhost:3000'
     this.loginUrl = this.baseUrl + '/login'
+    this.signupUrl = this.baseUrl + '/signup'
     this.validateUrl = this.baseUrl + '/validate'
 
   }
