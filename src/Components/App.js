@@ -13,11 +13,15 @@ class App extends Component {
     logged_in: true,
     searchInput: "",
     news: [],
-    user_id: 1,
+    user_id: 2,
     user_name: '',
     user_categories: [],
     country: "us",
     category: "All"
+  }
+
+  updateState = (update) => {
+    this.setState({ user_categories: [...this.state.user_categories, update] })
   }
 
 
@@ -123,7 +127,6 @@ class App extends Component {
            Welcome to the source of #real news
           </h1>
           <button className="auth-button">Sign up</button>
-          {/* variant="contained" color="primary" */}
           <button className="auth-button">Log in</button>
 
           {this.state.logged_in ? 
@@ -131,8 +134,8 @@ class App extends Component {
           : <HomeFilterForm handleChange={handleChange} handleSubmit={handleSubmit} />}
         </header>
         {this.state.logged_in ? 
-          <ProfilePage user={this.state.user_id} username={this.state.user_name} categories={this.state.user_categories} newsData={this.state.news} getProfileNews={this.getProfileNews} handleSubmit={handleSubmit}/> 
-        : <NewsList newsData={this.state.news}  handleChange={handleChange} handleSubmit={handleSubmit}/>}
+          <ProfilePage user={this.state.user_id} username={this.state.user_name} categories={this.state.user_categories} newsData={this.state.news} getProfileNews={this.getProfileNews} handleSubmit={handleSubmit} updateState={this.updateState}/> 
+        : <NewsList newsData={this.filterByAuthorOrArticle()}  handleChange={handleChange} handleSubmit={handleSubmit}/>}
 
        
        {/* <SearchBar searchInput={this.state.searchInput} handleSearch={this.handleSearch} handleSubmit={this.handleSubmit}/> */}

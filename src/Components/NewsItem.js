@@ -12,19 +12,21 @@ class NewsItem extends Component {
     render() {
     const { news } = this.props
     return (
-      <div className="column">
-        <div className="card">
-          <div className="ui content">
-            <h1 className="ui huge header">
+      <div className="col-6">
+      <div className="bg-white p-4 rounded">
+          <div className="row pb-4">
+            <h1 className="text-left">
             {news.title} 
             </h1> 
             <div className="meta">
               {news.author}
             </div>
-            <div > 
-              <img className="image"src={news.urlToImage} alt={news.content} />
-            </div>
-            <p> {news.description} </p>
+          </div>
+          <div className="col-lg"> 
+            <img className="img-fluid rounded" src={news.urlToImage} alt={news.content} />
+          </div>
+          <div className="row pt-4 text-left">
+           {news.description}
           </div>
         </div>
       </div>

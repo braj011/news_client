@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import NewsItem from './NewsItem'
+import NewsItem from './NewsItem';
 // import InputBase from '@material-ui/core/InputBase';
-
+import Categories from './Categories';
 
 class ProfilePage extends Component {
 
@@ -10,22 +10,15 @@ class ProfilePage extends Component {
       return this.props.newsData.map((item, idx) => <NewsItem news={item} key={idx}/>)
     }
 
-    
-     displayCategories = () => {
-      return this.props.categories.map((categoryItem, idx) => <button key={idx}>{categoryItem.name} </button>)
-     }
-
+   
     render() {
     return (
-      <div>
-        <h1>Welcome, {this.props.username}</h1>
-        <h3>Your categories: </h3>
-        <div className="ui segment">
-          {this.displayCategories()}
-          <input type="button" className="get-news-button" value="&#x21bb;" onClick={this.props.handleSubmit}/>
-        </div>
-         
-        {this.displayAllNews()}
+      <div className="container">
+        <h1>Welcome, {this.props.username} </h1>
+          <Categories categories={this.props.categories} user={this.props.user} updateState={this.props.updateState}/>
+         <div className="row">
+          {this.displayAllNews()}
+         </div>
       </div>
     );
   }
