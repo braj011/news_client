@@ -14,7 +14,7 @@ class ProfilePage extends Component {
     return (
       <div className="container">
         <h1>Welcome, {this.props.username} </h1>
-          <Categories categories={this.props.categories} user={this.props.user} updateState={this.props.updateState}/>
+          <Categories categories={this.props.categories} user={this.props.user} updateState={this.props.updateState} getProfileNews={this.props.getProfileNews}/>
            <div>
              <input type="button" className="get-news-button" value="&#x21bb;" onClick={this.props.handleSubmit}/>
              <input className="filter-author-article" placeholder="Filter by Author or Article" onChange={this.props.handleFilter} value={this.props.searchInput}></input>
