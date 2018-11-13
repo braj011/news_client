@@ -15,7 +15,7 @@ class ProfilePage extends Component {
       return this.props.categories.map((categoryItem, idx) => <button key={idx}>{categoryItem.name} </button>)
      }
 
-    render() {
+    render() { 
     return (
       <div>
         <h1>Welcome, {this.props.username}</h1>
@@ -24,7 +24,9 @@ class ProfilePage extends Component {
           {this.displayCategories()}
           <input type="button" className="get-news-button" value="&#x21bb;" onClick={this.props.handleSubmit}/>
         </div>
-         
+         <div>
+          <input className="filter-author-article" placeholder="Filter by Author or Article" onChange={this.props.handleFilter} value={this.props.searchInput}></input>
+         </div>
         {this.displayAllNews()}
       </div>
     );
