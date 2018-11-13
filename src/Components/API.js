@@ -1,18 +1,17 @@
 class API {
   static init () {
  
-    this.baseUrl = 'http://localhost:3000/news_apis'  // for when on local 
+    this.newsUrl = 'http://localhost:3000/news_apis'  // for when on local 
+    this.baseUrl = 'http://localhost:3000'
+    this.loginUrl = this.baseUrl + '/login'
+    this.validateUrl = this.baseUrl + '/validate'
 
   }
-
- 
-
-  // static getNewsHeadlines () {
-
-  // }
 
 } 
 
 API.init()
 
-export default API;
+window.API = API
+
+export default API
