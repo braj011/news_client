@@ -21,7 +21,11 @@ class App extends Component {
   }
 
   updateState = (update) => {
+    if (Number.isInteger(update)){
+      this.setState({ user_categories: this.state.user_categories.filter(item => item.id !== update) })
+    } else {
     this.setState({ user_categories: [...this.state.user_categories, update] })
+        }
   }
 
 
@@ -73,7 +77,7 @@ class App extends Component {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         'type': 'everything',
-        'query': categories.join(" "),
+        'query': categories.join(" OR "),
         'sort': 'popularity'
       })
     })

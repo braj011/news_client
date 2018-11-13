@@ -13,7 +13,7 @@ class Categories extends Component {
  
      displayCategories = () => {
       return this.props.categories.map((categoryItem, idx) => 
-        <button type="button" className="btn btn-secondary" key={idx}>
+        <button type="button" className="btn btn-secondary" key={idx} onClick={() => this.deleteCategory(categoryItem.id, this.props.user)} id={categoryItem.id}>
           {categoryItem.name}
         </button>
         )
@@ -52,9 +52,27 @@ class Categories extends Component {
               .then(resp => resp.json())
               .then(data => { this.createCategoryUser(data.id, this.props.user) 
                 this.props.updateState(data)
+               
               })
-              .then(() => this.setState({ newCategory: '' }))
+              .then(() => this.setState({ newCategory: '',  addCategory: false}))
+              .then(this.props.getProfileNews)
      }
+
+     deleteCategory = (categoryID, userID) => {
+        return fetch('http://localhost:3000/categories_users/',  {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              'user': userID,
+              'category': categoryID, 
+              'type': 'delete'
+            })
+          })
+              .then(resp => resp.json())
+              .then(data => {this.props.updateState(data.category_id)})
+              .then(this.props.getProfileNews)
+     }
+
 
     render() {
     return (
