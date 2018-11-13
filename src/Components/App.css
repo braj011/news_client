@@ -44,6 +44,8 @@
   background-color: #4CAF50;
   color: white;
 }
+
+/* refresh button */
 .get-news-button {
   font-size: 1.5rem;
   font-style: none;
@@ -55,7 +57,11 @@
 }
 .get-news-button:hover{
   background-color: #008CBA;
+}
 
+.filter-author-article {
+  width: 12%;
+  margin-right: 5px;
 }
 
 
