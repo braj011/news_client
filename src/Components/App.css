@@ -45,15 +45,17 @@
   color: white;
 }
 .get-news-button {
-  font-size: 2rem;
-  font-style: italic;
+  font-size: 1.5rem;
+  font-style: none;
   background-color: #4CAF50;
   color: #fff;
-  padding: 10px 30px;
+  padding: 0px 5px;
   border-radius: 15px;
+}
+.get-news-button:hover{
+  background-color: #008CBA;
 
 }
-
 
 
 ul {
