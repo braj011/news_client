@@ -52,6 +52,7 @@
   background-color: #4CAF50;
   color: #fff;
   padding: 0px 5px;
+  margin-left: 10px; 
   border-radius: 15px;
 }
 .get-news-button:hover{
