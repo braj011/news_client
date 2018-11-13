@@ -14,10 +14,10 @@ import ProfilePage from './ProfilePage'
 class App extends Component {
 
   state = {
-    logged_in: false,
+    logged_in: true,
     searchInput: "",
     news: [],
-    user_id: 3,
+    user_id: 1,
     user_name: '',
     user_categories: [],
     country: "us",
@@ -85,8 +85,7 @@ class App extends Component {
 } 
 
   componentDidMount() {
-  
-  this.state.logged_in ? this.getProfile() : this.getNewsHeadlines() 
+  this.state.logged_in ? this.getProfile().then(this.getProfileNews) : this.getNewsHeadlines() 
   }
 
 
