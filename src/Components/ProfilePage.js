@@ -11,19 +11,20 @@ class ProfilePage extends Component {
     }
 
     
-       ComponentDidMount(){ 
-        
-    }
+     displayCategories = () => {
+      return this.props.categories.map((categoryItem, idx) => <button key={idx}>{categoryItem.name} </button>)
+     }
 
     render() {
     return (
       <div>
         <h1>Welcome, {this.props.username}</h1>
-        <br />
         <h3>Your categories: </h3>
-        <div class="ui segment">
-          {this.props.categories.map(categoryItem => <span>{categoryItem.name} </span>)}
+        <div className="ui segment">
+          {this.displayCategories()}
+          <input type="button" className="get-news-button" value="&#x21bb;" onClick={this.props.handleSubmit}/>
         </div>
+         
         {this.displayAllNews()}
       </div>
     );

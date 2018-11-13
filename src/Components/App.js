@@ -30,6 +30,9 @@ class App extends Component {
   }
   
   getNewsHeadlines = () => {
+    if (this.state.news.length > 0) {
+      this.setState({ news: []})
+    }
     return fetch('http://localhost:3000/news_apis/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -90,8 +93,8 @@ class App extends Component {
   }
 
   render() {
-    const { handleChange, handleSubmit, getNewsHeadlines } = this
-    const { news } = this.state
+    const { handleChange, handleSubmit } = this
+    // const { news } = this.state
     return (
       <div className="App">
         <header>
@@ -106,11 +109,11 @@ class App extends Component {
           {/* variant="contained" color="primary" */}
           <button className="auth-button">Log in</button>
           {this.state.logged_in ? 
-            <input type="button" className="get-news-button" value="Get News" onClick={this.handleSubmit}/> 
+            null
           : <HomeFilterForm handleChange={handleChange} handleSubmit={handleSubmit} />}
         </header>
         {this.state.logged_in ? 
-          <ProfilePage user={this.state.user_id} username={this.state.user_name} categories={this.state.user_categories} newsData={this.state.news} getProfileNews={this.getProfileNews}/> 
+          <ProfilePage user={this.state.user_id} username={this.state.user_name} categories={this.state.user_categories} newsData={this.state.news} getProfileNews={this.getProfileNews} handleSubmit={handleSubmit}/> 
         : <NewsList newsData={this.state.news}  handleChange={handleChange} handleSubmit={handleSubmit}/>}
        
        {/* <SearchBar searchInput={this.state.searchInput} handleSearch={this.handleSearch} handleSubmit={this.handleSubmit}/> */}
