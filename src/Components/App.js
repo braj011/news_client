@@ -7,10 +7,6 @@ import HomeFilterForm from './HomeFilterForm'
 import ProfilePage from './ProfilePage'
 
 
-
-// import InputBase from '@material-ui/core/InputBase';
-
-
 class App extends Component {
 
   state = {
@@ -28,6 +24,16 @@ class App extends Component {
   handleSearch = (event) => {
     this.setState({ searchInput: event.target.value })
   }
+
+  filterByAuthorOrArticle = () => {
+    return this.state.news.filter(article => {
+      // if (article.author) {
+        return article.author.toLowerCase().includes(this.state.searchInput.toLowerCase()) 
+              || article.title.toLowerCase().includes(this.state.searchInput.toLowerCase())
+      // } 
+    })
+  }  
+  
   
   getNewsHeadlines = () => {
     if (this.state.news.length > 0) {
@@ -41,8 +47,19 @@ class App extends Component {
         'category': this.state.category
       })
     }).then(resp => resp.json())
-      .then(newsData => this.setState({news: newsData.articles}))
-      // .then(() => console.log(this.state.news))
+      .then(newsData => {
+        const news = newsData.articles.map(article => {
+          if (!article.author) {
+            return {...article, author: "Unknown"}
+            // spreading existing articles and if author key is falsey, it gets replaced with "Unknown"
+          } else {
+            return article
+          }
+        })
+        // console.log(news)
+        
+        this.setState({news: news})
+      }) 
   }
 
 
@@ -108,6 +125,7 @@ class App extends Component {
           <button className="auth-button">Sign up</button>
           {/* variant="contained" color="primary" */}
           <button className="auth-button">Log in</button>
+
           {this.state.logged_in ? 
             null
           : <HomeFilterForm handleChange={handleChange} handleSubmit={handleSubmit} />}
@@ -115,6 +133,7 @@ class App extends Component {
         {this.state.logged_in ? 
           <ProfilePage user={this.state.user_id} username={this.state.user_name} categories={this.state.user_categories} newsData={this.state.news} getProfileNews={this.getProfileNews} handleSubmit={handleSubmit}/> 
         : <NewsList newsData={this.state.news}  handleChange={handleChange} handleSubmit={handleSubmit}/>}
+
        
        {/* <SearchBar searchInput={this.state.searchInput} handleSearch={this.handleSearch} handleSubmit={this.handleSubmit}/> */}
       </div>
