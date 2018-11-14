@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, withRouter, Link, Switch } from 'react-router-dom'
+import { Route, Link } from 'react-router-dom'
 import LoginForm from './LoginForm'
 import SignupForm from './SignupForm'
 // import API from './API'

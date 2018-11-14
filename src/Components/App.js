@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Route, withRouter, Link, Switch } from 'react-router-dom'
+import { Route, withRouter } from 'react-router-dom'
 
 import API from './API'
 import LoginButtons from './LoginButtons'
@@ -32,14 +32,19 @@ class App extends Component {
   }
 
   login = (user) => {
-    localStorage.setItem('token', user.token)
-    this.setState({ user_name: user.username, user_id: user.id})
-    this.props.history.push('/home')
-    API.getProfile(this.state.user_id)
-          .then(user => {
-            this.setState({ user_categories: user[1], logged_in: true })
-          })
-          .then(this.getProfileNews) 
+    if (user.error) {
+      alert(user.error)
+      this.props.history.push('/login')
+    } else {
+      localStorage.setItem('token', user.token)
+      this.setState({ user_name: user.username, user_id: user.id})
+      this.props.history.push('/home')
+      API.getProfile(this.state.user_id)
+            .then(user => {
+              this.setState({ user_categories: user[1], logged_in: true })
+            })
+            .then(this.getProfileNews) 
+    } 
   }
 
   signout = () => {
@@ -118,16 +123,16 @@ class App extends Component {
     }
 
   
-
   componentDidMount() {
-    if (!localStorage.getItem('token')) return 
+    if (localStorage.getItem('token')) { 
     API.validate()
-    .then(user => this.login(user))
-    .then(this.props.history.push('/home'))
-    .catch(error => {
-      this.getNewsHeadlines() 
-      this.props.history.push('/home')
-    })
+      .then(user => this.login(user))
+      .then(this.props.history.push('/home'))
+      .catch(error => {
+        this.props.history.push('/home')
+        
+      })
+    } 
   }
 
 
@@ -153,7 +158,7 @@ class App extends Component {
 
   render() {
 
-    const { handleChange, handleSubmit, handleSignup, handleSearch, filterByAuthorOrArticle, signout, updateState, getProfileNews } = this
+    const { handleChange, handleSubmit, handleSignup, handleSearch, filterByAuthorOrArticle, signout, updateState, getProfileNews, getNewsHeadlines } = this
 
     const { searchInput, logged_in, user_categories, user_name, user_id } = this.state
     return (
@@ -169,8 +174,9 @@ class App extends Component {
           <LoginButtons handleSubmit={handleSubmit} handleSignup={handleSignup} signout={signout} logged_in={logged_in}/>
         </header>
           
-        <Route path='/home' render={props => <Home {...props} user_name={user_name} getProfileNews={getProfileNews} user_id={user_id} user_categories={user_categories} handleChange={handleChange} handleSubmit={handleSubmit} handleFilter={handleSearch} 
-        searchInput={searchInput} filterByAuthorOrArticle={filterByAuthorOrArticle} logged_in={logged_in} updateState={updateState}/>} />
+        <Route path='/home' render={props => <Home {...props} user_name={user_name} getProfileNews={getProfileNews} getNewsHeadlines={getNewsHeadlines} user_id={user_id} user_categories={user_categories} 
+          handleChange={handleChange} handleSubmit={handleSubmit} handleSearch={handleSearch} 
+          searchInput={searchInput} filterByAuthorOrArticle={filterByAuthorOrArticle} logged_in={logged_in} updateState={updateState}/>} />
 
 
        
