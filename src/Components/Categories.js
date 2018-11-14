@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-
+import API from './API'
 // import InputBase from '@material-ui/core/InputBase';
 
 
@@ -27,50 +27,19 @@ class Categories extends Component {
          this.setState({ newCategory: e.target.value })
      }
 
-     createCategoryUser = (categoryID, userID) => {
-        return fetch('http://localhost:3000/categories_users/',  {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              'user': userID,
-              'category': categoryID
-            })
-          })
-              .then(resp => resp.json())
-              
-     }
-
      addCategory = (e) => {
-        e.preventDefault();
-       return fetch('http://localhost:3000/categories/',  {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              'name': this.state.newCategory
-            })
-          })
-              .then(resp => resp.json())
-              .then(data => { this.createCategoryUser(data.id, this.props.user) 
-                this.props.updateState(data)
-               
-              })
-              .then(() => this.setState({ newCategory: '',  addCategory: false}))
-              .then(this.props.getProfileNews)
+       e.preventDefault()
+      API.addCategory(this.state.newCategory)
+        .then(data => { API.createCategoryUser(data.id, this.props.user) 
+        this.props.updateState(data)
+      })
+      .then(() => this.setState({ newCategory: '',  addCategory: false}))
+      .then(this.props.getProfileNews)
      }
 
      deleteCategory = (categoryID, userID) => {
-        return fetch('http://localhost:3000/categories_users/',  {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              'user': userID,
-              'category': categoryID, 
-              'type': 'delete'
-            })
-          })
-              .then(resp => resp.json())
-              .then(data => {this.props.updateState(data.category_id)})
-              .then(this.props.getProfileNews)
+      API.deleteCategory(categoryID, userID).then(data => {this.props.updateState(data.category_id)})
+      .then(this.props.getProfileNews)
      }
 
 

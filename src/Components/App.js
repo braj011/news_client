@@ -147,7 +147,7 @@ class App extends Component {
   }
 
   render() {
-    const { handleChange, handleSubmit, handleSearch, filterByAuthorOrArticle, signout } = this
+    const { handleChange, handleSubmit, handleSearch, filterByAuthorOrArticle, signout, updateState } = this
     const { searchInput, logged_in, user_categories, user_name, user_id } = this.state
     return (
       <div className="App">
@@ -163,7 +163,7 @@ class App extends Component {
         </header>
           
         <Route path='/home' render={props => <Home {...props} user_name={user_name} user_id={user_id} user_categories={user_categories} handleChange={handleChange} handleSubmit={handleSubmit} handleFilter={handleSearch} 
-        searchInput={searchInput} filterByAuthorOrArticle={filterByAuthorOrArticle} logged_in={logged_in} />} />
+        searchInput={searchInput} filterByAuthorOrArticle={filterByAuthorOrArticle} logged_in={logged_in} updateState={updateState}/>} />
 
 
        
