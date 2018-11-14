@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Route, withRouter } from 'react-router-dom'
+import { Route, withRouter, Link } from 'react-router-dom'
 
 import API from './API'
 import LoginButtons from './LoginButtons'
@@ -162,22 +162,39 @@ class App extends Component {
 
     const { searchInput, logged_in, user_categories, user_name, user_id } = this.state
     return (
-      <div className="App">
+      <div className="App container">
         <header>
-          <h1
-            className="App-link"
-            target="_blank"
-            rel="noopener noreferrer"
-          >Welcome to the source of #real news
-          </h1>
-          
-          <LoginButtons handleSubmit={handleSubmit} handleSignup={handleSignup} signout={signout} logged_in={logged_in}/>
+          <div className="row">
+          <div className="col-6 text-left"> 
+          <div className="row">
+          <div className="col-4">
+            <Link to="/home">
+              <h1 className="App-link" target="_blank" rel="noopener noreferrer">
+                  #RealNews       
+              </h1>  
+            </Link>
+            </div>
+                <div className="col-8 pt-2 pl-4"> 
+                  {this.state.logged_in ? <button className="btn btn-outline-success" onClick={getProfileNews} >&#x21bb;</button>
+                  : <button className="btn btn-outline-success" onClick={getNewsHeadlines} >&#x21bb;</button>}
+                  
+                </div>
+              </div>
+           </div>
+          <div className="col-6 text-right">
+          <LoginButtons handleSubmit={handleSubmit} handleSignup={handleSignup} signout={signout}
+          user_name={user_name} getProfileNews={getProfileNews} getNewsHeadlines={getNewsHeadlines} user_id={user_id} user_categories={user_categories} 
+          handleChange={handleChange} handleSearch={handleSearch} 
+          searchInput={searchInput} filterByAuthorOrArticle={filterByAuthorOrArticle} logged_in={logged_in} updateState={updateState}
+          />
+          </div>
+        </div>
         </header>
-          
-        <Route path='/home' render={props => <Home {...props} user_name={user_name} getProfileNews={getProfileNews} getNewsHeadlines={getNewsHeadlines} user_id={user_id} user_categories={user_categories} 
+        
+          <Route path='/home' render={props => <Home {...props} user_name={user_name} getProfileNews={getProfileNews} getNewsHeadlines={getNewsHeadlines} user_id={user_id} user_categories={user_categories} 
           handleChange={handleChange} handleSubmit={handleSubmit} handleSearch={handleSearch} 
           searchInput={searchInput} filterByAuthorOrArticle={filterByAuthorOrArticle} logged_in={logged_in} updateState={updateState}/>} />
-
+  
 
        
        {/* <SearchBar searchInput={this.state.searchInput} handleSearch={this.handleSearch} handleSubmit={this.handleSubmit}/> */}

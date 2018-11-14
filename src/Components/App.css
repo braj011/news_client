@@ -1,3 +1,17 @@
+a:link {
+  text-decoration:none;
+  color: #000000;
+}
+a:hover {
+  text-decoration:none;
+  color: #525252;
+}
+
+a:visited {
+  text-decoration:none;
+  color: #000000;
+}
+
 .App {
   text-align: center;
   background-color: lightgray;
@@ -21,6 +35,12 @@
 
 .App-link {
   color: #4CAF50;
+  text-decoration: none;
+}
+
+.App-link:hover{
+  color: rgb(53, 124, 55);
+  text-decoration: none;
 }
 
 @keyframes App-logo-spin {
