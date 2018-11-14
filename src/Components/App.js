@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Route, Link, Switch } from 'react-router-dom'
+import { Route, withRouter, Link, Switch } from 'react-router-dom'
 
 import API from './API'
-import LoginForm from './LoginForm'
-import NewsList from './NewsList'
-import HomeFilterForm from './HomeFilterForm'
+import LoginButtons from './LoginButtons'
+// import NewsList from './NewsList'
+// import HomeFilterForm from './HomeFilterForm'
 import Home from './Home'
 
-import ProfilePage from './ProfilePage'
+// import ProfilePage from './ProfilePage'
 
 class App extends Component {
 
@@ -33,14 +33,15 @@ class App extends Component {
 
   login = (user) => {
     localStorage.setItem('token', user.token)
-    this.setState({ user_name: user.username, user_id: user.id, logged_in: true })
+    this.setState({ user_name: user.username, user_id: user.id})
     this.props.history.push('/home')
   }
 
   signout = () => {
     localStorage.removeItem('token')
-    this.setState({ username: '', user_id: '', logged_in: false })
+    this.setState({ user_name: '', user_id: '', logged_in: false, user_categories: [] })
     this.props.history.push('/home')
+    this.getNewsHeadlines()
   }
 
 
@@ -61,9 +62,10 @@ class App extends Component {
     if (this.state.news.length > 0) {
       this.setState({ news: []})
     }
+    const token = localStorage.getItem('token')
     return fetch('http://localhost:3000/news_apis/', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Authorization': token },
       body: JSON.stringify({
         'country': this.state.country,
         'category': this.state.category
@@ -110,21 +112,20 @@ class App extends Component {
         }) 
     }
 
-  getProfile = () => {
-    return fetch (`http://localhost:3000/users/${this.state.user_id}`)
-    .then(resp => resp.json())
-    .then(user => this.setState({ user_name: user[0].username, user_categories: user[1] }))
-    
-} 
+  
 
   componentDidMount() {
     if (!localStorage.getItem('token')) return 
     API.validate()
     .then(user => {
       this.login(user)
-      this.getProfile().then(this.getProfileNews) 
-      this.props.history.push('/home')
-    })
+       })
+    .then(user => {
+          API.getProfile(this.state.user_id)
+          .then(user => this.setState({ user_categories: user[1] }))
+          .then(this.getProfileNews) 
+          })
+    .then(this.props.history.push('/home'))
     .catch(error => {
       this.getNewsHeadlines() 
       this.props.history.push('/home')
@@ -139,13 +140,16 @@ class App extends Component {
 
   }
 
-  handleSubmit = (event) => {
-    event.preventDefault()
-    this.state.logged_in ? this.getProfileNews() : this.getNewsHeadlines()
+  handleSubmit = (username, password) => {
+   
+    // this.state.logged_in ? this.getProfileNews() : this.getNewsHeadlines()
+    API.login(username, password)
+      .then(this.login)
+      .catch(err => console.log(err))
   }
 
   render() {
-    const { handleChange, handleSubmit, handleSearch, filterByAuthorOrArticle } = this
+    const { handleChange, handleSubmit, handleSearch, filterByAuthorOrArticle, signout } = this
     const { searchInput, logged_in, user_categories, user_name, user_id } = this.state
     return (
       <div className="App">
@@ -157,16 +161,7 @@ class App extends Component {
           >Welcome to the source of #real news
           </h1>
           
-          <Link to="/signup">
-            <button className="auth-button">Sign up</button>
-          </Link>
-          {/* <Route path='/signup' render={props => <SignupForm {...props} />} /> */}
-
-          <Link to="/login">
-            <button className="auth-button" >Log in</button>
-          </Link>
-          <Route path='/login' render={props => <LoginForm {...props} />} />
-          
+          <LoginButtons handleSubmit={handleSubmit} signout={signout}/>
         </header>
           
         <Route path='/home' render={props => <Home {...props} user_name={user_name} user_id={user_id} user_categories={user_categories} handleChange={handleChange} handleSubmit={handleSubmit} handleFilter={handleSearch} 
@@ -180,4 +175,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);
