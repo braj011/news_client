@@ -34,8 +34,7 @@ class API {
 
   static getProfile (id) {
     return this.get(`http://localhost:3000/users/${id}`)
-    
-} 
+}
 
 } 
 

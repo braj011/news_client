@@ -35,6 +35,11 @@ class App extends Component {
     localStorage.setItem('token', user.token)
     this.setState({ user_name: user.username, user_id: user.id})
     this.props.history.push('/home')
+    API.getProfile(this.state.user_id)
+          .then(user => {
+            this.setState({ user_categories: user[1] })
+          })
+          .then(this.getProfileNews) 
   }
 
   signout = () => {
@@ -117,14 +122,7 @@ class App extends Component {
   componentDidMount() {
     if (!localStorage.getItem('token')) return 
     API.validate()
-    .then(user => {
-      this.login(user)
-       })
-    .then(user => {
-          API.getProfile(this.state.user_id)
-          .then(user => this.setState({ user_categories: user[1] }))
-          .then(this.getProfileNews) 
-          })
+    .then(user => this.login(user))
     .then(this.props.history.push('/home'))
     .catch(error => {
       this.getNewsHeadlines() 
