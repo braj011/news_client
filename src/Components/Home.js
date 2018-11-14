@@ -4,6 +4,7 @@ import NewsList from './NewsList'
 import ProfilePage from './ProfilePage'
 import HomeFilterForm from './HomeFilterForm'
 
+
 class Home extends React.Component {
 
   render () {

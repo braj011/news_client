@@ -46,7 +46,7 @@
 }
 
 /* refresh button */
-.get-news-button {
+.refresh-button {
   font-size: 1.5rem;
   font-style: none;
   background-color: #4CAF50;
@@ -55,7 +55,7 @@
   margin-left: 10px; 
   border-radius: 15px;
 }
-.get-news-button:hover{
+.refresh-button:hover{
   background-color: #008CBA;
 }
 
