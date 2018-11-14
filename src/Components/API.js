@@ -13,7 +13,7 @@ class API {
   static login (username, password) {
     return fetch(this.loginUrl, {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'application/json', },
       body: JSON.stringify({
         username,
         password
@@ -22,13 +22,20 @@ class API {
   }
 
   static validate () {
+    return this.get(this.validateUrl)
+  }
+
+  static get (url) {
     const token = localStorage.getItem('token')
-    return fetch(this.validateUrl, {
+    return fetch(url, {
       headers: {'Authorization': token}
     }).then(resp => resp.json())
   }
 
-
+  static getProfile (id) {
+    return this.get(`http://localhost:3000/users/${id}`)
+    
+} 
 
 } 
 

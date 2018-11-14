@@ -14,7 +14,8 @@ class LoginForm extends React.Component {
 
   render () {
     const { username, password } = this.state
-    const { handleChange, handleSubmit } = this
+    const { handleChange } = this
+    const { handleSubmit } = this.props
     return(
       <form>
           <label className="grey-text" margin='normal'> Username</label>
@@ -26,7 +27,10 @@ class LoginForm extends React.Component {
             onChange={handleChange} />
           
         <br/>
-        <button variant='contained' type='submit' color='primary' onClick={handleSubmit} >
+        <button variant='contained' type='submit' color='primary' onClick={e => {
+          e.preventDefault()
+          handleSubmit(this.state.username, this.state.password)
+          }} >
         
           LOGIN
         </button>
