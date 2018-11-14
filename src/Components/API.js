@@ -36,6 +36,44 @@ class API {
     return this.get(`http://localhost:3000/users/${id}`)
 }
 
+static addCategory (newCategory) {
+ return fetch('http://localhost:3000/categories/',  {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        'name': newCategory
+      })
+    })
+        .then(resp => resp.json())
+        
+}
+
+static createCategoryUser (categoryID, userID){
+  return fetch('http://localhost:3000/categories_users/',  {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        'user': userID,
+        'category': categoryID
+      })
+    })
+        .then(resp => resp.json())   
+    }   
+
+static deleteCategory (categoryID, userID) {
+  return fetch('http://localhost:3000/categories_users/',  {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        'user': userID,
+        'category': categoryID, 
+        'type': 'delete'
+      })
+    })
+        .then(resp => resp.json())
+}
+
+
 } 
 
 API.init()
