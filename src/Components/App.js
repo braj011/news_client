@@ -37,14 +37,14 @@ class App extends Component {
     this.props.history.push('/home')
     API.getProfile(this.state.user_id)
           .then(user => {
-            this.setState({ user_categories: user[1] })
+            this.setState({ user_categories: user[1], logged_in: true })
           })
           .then(this.getProfileNews) 
   }
 
   signout = () => {
     localStorage.removeItem('token')
-    this.setState({ user_name: '', user_id: '', logged_in: false, user_categories: [] })
+    this.setState({ user_name: "", user_id: "", logged_in: false, user_categories: [] })
     this.props.history.push('/home')
     this.getNewsHeadlines()
   }
@@ -139,15 +139,22 @@ class App extends Component {
   }
 
   handleSubmit = (username, password) => {
-   
     // this.state.logged_in ? this.getProfileNews() : this.getNewsHeadlines()
     API.login(username, password)
       .then(this.login)
       .catch(err => console.log(err))
   }
 
+  handleSignup = (username, password) => {
+    API.signup(username, password)
+      .then(this.login)
+      .catch(err => console.log(err))
+  }
+
   render() {
-    const { handleChange, handleSubmit, handleSearch, filterByAuthorOrArticle, signout, updateState } = this
+
+    const { handleChange, handleSubmit, handleSignup, handleSearch, filterByAuthorOrArticle, signout, updateState } = this
+
     const { searchInput, logged_in, user_categories, user_name, user_id } = this.state
     return (
       <div className="App">
@@ -159,7 +166,7 @@ class App extends Component {
           >Welcome to the source of #real news
           </h1>
           
-          <LoginButtons handleSubmit={handleSubmit} signout={signout}/>
+          <LoginButtons handleSubmit={handleSubmit} handleSignup={handleSignup} signout={signout} logged_in={logged_in}/>
         </header>
           
         <Route path='/home' render={props => <Home {...props} user_name={user_name} user_id={user_id} user_categories={user_categories} handleChange={handleChange} handleSubmit={handleSubmit} handleFilter={handleSearch} 
