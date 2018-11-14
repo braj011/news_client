@@ -19,20 +19,18 @@ class LoginForm extends React.Component {
     return(
       <form>
           <label className="grey-text" margin='normal'> Username</label>
-          <input id='usernameInput' value={username} name='username' className="form-control" required
-            onChange={handleChange}/>  
+          <input id='usernameInput' value={username} name='username' className="form-control" 
+            onChange={handleChange} />  
         <br/>
           <label className="grey-text" margin='normal'> Password</label>
-          <input id='passwordInput' value={password} type='password' name='password' className="form-control"  required
+          <input id='passwordInput' value={password} type='password' name='password' className="form-control"  
             onChange={handleChange} />
-          
         <br/>
         <button variant='contained' type='submit' color='primary' onClick={e => {
           e.preventDefault()
           handleSubmit(this.state.username, this.state.password)
           }} >
-        
-          LOGIN
+          Submit
         </button>
       </form>
 
