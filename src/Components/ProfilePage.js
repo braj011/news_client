@@ -13,14 +13,16 @@ class ProfilePage extends Component {
    
     render() {
     return (
-      <div className="container">
-        <h1>Welcome, {this.props.username} </h1>
+      <div>
+      <div className="row pt-4">
+        <div className="col-8 pl-4">
           <Categories categories={this.props.categories} user={this.props.user} updateState={this.props.updateState} getProfileNews={this.props.getProfileNews}/>
-           <div>
-             <input type="button" className="refresh-button" value="&#x21bb;" onClick={this.props.getProfileNews}/>
-             <input className="filter-author-article" placeholder="Filter by Author or Article" onChange={this.props.handleFilter} value={this.props.searchInput}></input>
+          </div>
+           <div className="col-4 text-right">
+             <input className="form-control" placeholder="Filter by Author or Article" onChange={this.props.handleFilter} value={this.props.searchInput}></input>
            </div>
-         <div className="row">
+           </div>
+         <div className="row mt-4">
           {this.displayAllNews()}
          </div>
       </div>

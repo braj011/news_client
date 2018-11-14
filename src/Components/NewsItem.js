@@ -12,11 +12,11 @@ class NewsItem extends Component {
     render() {
     const { news } = this.props
     return (
-      <div className="col-6">
-      <div className="bg-white p-4 rounded">
+      <div className="col-6 mb-4">
+        <div className="bg-white p-4 rounded">
           <div className="row pb-4">
-            <h1 className="text-left">
-            {news.title} 
+            <h1 className="display-4 text-left">
+            <a href={news.url} target="_blank">{news.title}</a>
             </h1> 
             <div className="meta">
               {news.author}
@@ -26,7 +26,12 @@ class NewsItem extends Component {
             <img className="img-fluid rounded" src={news.urlToImage} alt={news.content} />
           </div>
           <div className="row pt-4 text-left">
-           {news.description}
+           {news.description} 
+          </div>
+          <div className="row pt-4">
+            <a href={news.url} target="_blank">
+              <button className="btn btn-outline-secondary">More</button>
+            </a>
           </div>
         </div>
       </div>

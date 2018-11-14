@@ -13,9 +13,11 @@ class Categories extends Component {
  
      displayCategories = () => {
       return this.props.categories.map((categoryItem, idx) => 
+
         <button type="button" className="btn btn-secondary" key={idx} onClick={() => this.deleteCategory(categoryItem.id, this.props.user)} id={categoryItem.id}>
           {categoryItem.name}
         </button>
+
         )
      }
     
@@ -50,7 +52,9 @@ class Categories extends Component {
                 <div className="input-group-prepend">
                     <button className="btn btn-outline-secondary" type="button" id="button-addon1">Categories</button>
                 </div>
-                {this.displayCategories()}
+                
+                  {this.displayCategories()}
+        
             <form className="input-group" onSubmit={this.addCategory}>
                 {this.state.addCategory ? null :
                 <input type="text" className="form-control" placeholder="Add Category" value={this.state.newCategory} onChange={this.updateCategory}/>
