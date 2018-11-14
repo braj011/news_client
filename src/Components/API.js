@@ -13,7 +13,18 @@ class API {
   static login (username, password) {
     return fetch(this.loginUrl, {
       method: 'POST',
-      headers: {'Content-Type': 'application/json', },
+      headers: {'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username,
+        password
+      })
+    }).then(resp => resp.json())
+  }
+
+  static signup (username, password) {
+    return fetch(this.signupUrl, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'}, 
       body: JSON.stringify({
         username,
         password

@@ -1,9 +1,8 @@
 import React from 'react'
-// import { Route, withRouter } from 'react-router-dom'
 
 // import API from './API'
 
-class LoginForm extends React.Component {
+class SignupForm extends React.Component {
   state = {
     username: '',
     password: ''
@@ -15,24 +14,23 @@ class LoginForm extends React.Component {
   render () {
     const { username, password } = this.state
     const { handleChange } = this
-    const { handleSubmit } = this.props
+    const { handleSignup } = this.props
     return(
       <form>
           <label className="grey-text" margin='normal'> Username</label>
-          <input id='usernameInput' value={username} name='username' className="form-control" required
+          <input id='usernameInput' value={username} name='username' className="form-control"  required
             onChange={handleChange}/>  
         <br/>
           <label className="grey-text" margin='normal'> Password</label>
-          <input id='passwordInput' value={password} type='password' name='password' className="form-control"  required
+          <input id='passwordInput' value={password} type='password' name='password' className="form-control" required
             onChange={handleChange} />
           
         <br/>
         <button variant='contained' type='submit' color='primary' onClick={e => {
           e.preventDefault()
-          handleSubmit(this.state.username, this.state.password)
-          }} >
-        
-          LOGIN
+          handleSignup(this.state.username, this.state.password)
+          }} > 
+          SIGN UP
         </button>
       </form>
 
@@ -42,4 +40,4 @@ class LoginForm extends React.Component {
 
 } 
 
-export default LoginForm
+export default SignupForm
