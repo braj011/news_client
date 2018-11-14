@@ -153,7 +153,7 @@ class App extends Component {
 
   render() {
 
-    const { handleChange, handleSubmit, handleSignup, handleSearch, filterByAuthorOrArticle, signout, updateState } = this
+    const { handleChange, handleSubmit, handleSignup, handleSearch, filterByAuthorOrArticle, signout, updateState, getProfileNews } = this
 
     const { searchInput, logged_in, user_categories, user_name, user_id } = this.state
     return (
@@ -169,7 +169,7 @@ class App extends Component {
           <LoginButtons handleSubmit={handleSubmit} handleSignup={handleSignup} signout={signout} logged_in={logged_in}/>
         </header>
           
-        <Route path='/home' render={props => <Home {...props} user_name={user_name} user_id={user_id} user_categories={user_categories} handleChange={handleChange} handleSubmit={handleSubmit} handleFilter={handleSearch} 
+        <Route path='/home' render={props => <Home {...props} user_name={user_name} getProfileNews={getProfileNews} user_id={user_id} user_categories={user_categories} handleChange={handleChange} handleSubmit={handleSubmit} handleFilter={handleSearch} 
         searchInput={searchInput} filterByAuthorOrArticle={filterByAuthorOrArticle} logged_in={logged_in} updateState={updateState}/>} />
 
 
