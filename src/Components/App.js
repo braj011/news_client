@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import { Route, Link, Switch } from 'react-router-dom'
 
-// import API from './API'
+import API from './API'
 import LoginForm from './LoginForm'
 import NewsList from './NewsList'
 import HomeFilterForm from './HomeFilterForm'
@@ -13,11 +13,11 @@ import ProfilePage from './ProfilePage'
 class App extends Component {
 
   state = {
-    logged_in: true,
+    logged_in: false,
     searchInput: "",
     news: [],
-    user_id: 4,
-    user_name: '',
+    user_id: "",
+    user_name: "",
     user_categories: [],
     country: "us",
     category: "All"
@@ -29,6 +29,18 @@ class App extends Component {
     } else {
     this.setState({ user_categories: [...this.state.user_categories, update] })
         }
+  }
+
+  login = (user) => {
+    localStorage.setItem('token', user.token)
+    this.setState({ user_name: user.username, user_id: user.id, logged_in: true })
+    this.props.history.push('/home')
+  }
+
+  signout = () => {
+    localStorage.removeItem('token')
+    this.setState({ username: '', user_id: '', logged_in: false })
+    this.props.history.push('/home')
   }
 
 
@@ -106,10 +118,17 @@ class App extends Component {
 } 
 
   componentDidMount() {
-  this.state.logged_in ? 
-    this.getProfile().then(this.getProfileNews) 
-    : 
-    this.getNewsHeadlines() 
+    if (!localStorage.getItem('token')) return 
+    API.validate()
+    .then(user => {
+      this.login(user)
+      this.getProfile().then(this.getProfileNews) 
+      this.props.history.push('/home')
+    })
+    .catch(error => {
+      this.getNewsHeadlines() 
+      this.props.history.push('/home')
+    })
   }
 
 
