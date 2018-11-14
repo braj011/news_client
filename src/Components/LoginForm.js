@@ -33,8 +33,6 @@ class LoginForm extends React.Component {
           Submit
         </button>
       </form>
-
-
     )
   }
 

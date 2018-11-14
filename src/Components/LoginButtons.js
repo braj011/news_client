@@ -16,12 +16,12 @@ class LoginButtons extends React.Component {
             <Link to="/signup">
               <button className="auth-button">Sign up</button>
             </Link>
-            <Route path='/signup' render={props => <SignupForm {...props} handleSignup={handleSignup} />} />
+            <Route exact path='/signup' render={props => <SignupForm {...props} handleSignup={handleSignup} />} />
 
             <Link to="/login">
               <button className="auth-button" >Log in</button>
             </Link>
-            <Route path='/login' render={props => <LoginForm {...props} handleSubmit={handleSubmit} />} />
+            <Route exact path='/login' render={props => <LoginForm {...props} handleSubmit={handleSubmit} />} />
           </div>
           :
           <div>

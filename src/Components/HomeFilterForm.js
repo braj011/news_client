@@ -16,7 +16,7 @@ const HomeFilterForm = (props) => {
       >
        {categories.map(category => <option key={category.code} value={category.code}>{category.name} </option> )}
       </select> 
-      <button onClick={props.handleSubmit}>Get News</button>
+      <button onClick={props.getNewsHeadlines}>Get News</button>
       <div>
         <br></br>
         <input className="filter-author-article" placeholder="Filter by Author or Article" onChange={props.handleSearch} value={props.searchInput}></input>
